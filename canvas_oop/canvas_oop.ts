@@ -61,9 +61,9 @@ class Rect extends DisplayObject {
 class TextField extends DisplayObject {
 
     render(context: CanvasRenderingContext2D) {
-        context.font = "20px Arial";
-        context.fillStyle = '#000000';
-        context.fillText('HelloWorld', 0, 20);
+        context.font = "14px Arial";
+        context.fillStyle = '#FFFFFF';
+        context.fillText('游戏结束 -- 您赢了', 0, 20);
     }
 }
 
@@ -103,30 +103,27 @@ var canvas: HTMLCanvasElement = document.getElementById("game") as HTMLCanvasEle
 var context = canvas.getContext("2d");
 
 
-var rect = new Rect();
-rect.width = 200;
-rect.height = 100;
-rect.color = '#00FF00'
 
-
-var rect2 = new Rect();
-rect2.width = 300;
-rect2.height = 50;
-rect2.x = 200;
-rect2.y = 200;
-rect2.rotation = Math.PI / 8;
-rect2.color = '#00FFFF'
 
 var text = new TextField();
-text.x = 10;
+text.x = 97;
+text.y = 166;
 
-var bitmap = new Bitmap();
-bitmap.source = 'wander-icon.jpg';
+
+var pic = new Bitmap();
+pic.source = 'w.jpg';
+
+var pic2 = new Bitmap();
+pic2.source = 's.jpg';
+pic2.x = 377;
+pic2.y = 212;
+
 
 //渲染队列
-var renderQueue = [rect, rect2, text,bitmap];
+var renderQueue = [pic,pic2, text];
 //资源加载列表
-var imageList = ['wander-icon.jpg'];
+var imageList = ['w.jpg','s.jpg'];
+
 
 //先加载资源，加载成功之后执行渲染队列
 loadResource(imageList, function() {
