@@ -96,7 +96,7 @@ class Body {
 var rect = new Rect();
 rect.width = 150;
 rect.height = 100;
-rect.color = '#FF0000';
+rect.color = '#F00000';
 
 /**
  * 创建一个物体，其显示内容为一个长方形，受重力做平抛运动
