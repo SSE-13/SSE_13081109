@@ -23,20 +23,23 @@ module game {
             grid.setWalkable(5, 3, false);
             grid.setWalkable(5, 4, false);
             grid.setWalkable(5, 5, false);
-
         }
-
         render(context: CanvasRenderingContext2D) {
-            context.fillStyle = '#0000FF';
             context.strokeStyle = '#FF0000';
             context.beginPath();
             for (var i = 0; i < NUM_COLS; i++) {
                 for (var j = 0; j < NUM_ROWS; j++) {
-                    context.rect(i * GRID_PIXEL_WIDTH, j * GRID_PIXEL_HEIGHT, GRID_PIXEL_WIDTH, GRID_PIXEL_HEIGHT);
-                    context.fill();
-                    context.stroke();
+                    if(!this.grid.getNode(i,j).walkable){
+                        context.fillStyle ='#000000';
+                    }
+                    else{
+                        context.fillStyle = '#0000FF';
+                    }
+                    context.fillRect(i * GRID_PIXEL_WIDTH, j * GRID_PIXEL_HEIGHT, GRID_PIXEL_WIDTH, GRID_PIXEL_HEIGHT);
+                    context.strokeRect(i * GRID_PIXEL_WIDTH, j * GRID_PIXEL_HEIGHT, GRID_PIXEL_WIDTH, GRID_PIXEL_HEIGHT);
                 }
             }
+
             context.closePath();
 
         }
@@ -55,20 +58,39 @@ module game {
 
     export class BoyBody extends Body {
 
-
-        public run(grid) {
+        path;
+        steps=1;
+        width=GRID_PIXEL_WIDTH;
+        height=GRID_PIXEL_HEIGHT;
+        
+        public run(grid:astar.Grid) {
             grid.setStartNode(0, 0);
+            this.x=grid.startNode.x*this.width;
+            this.y=grid.startNode.y*this.height;    
             grid.setEndNode(10, 8);
             var findpath = new astar.AStar();
             findpath.setHeurisitic(findpath.diagonal);
             var result = findpath.findPath(grid);
             var path = findpath._path;
-            console.log(path);
+            this.path = findpath._path;
+            console.log(this.path);
             console.log(grid.toString());
         }
 
         public onTicker(duringTime) {
-
+ if(this.steps < this.path.length-1){
+        var targetx=this.path[this.steps].x*this.width;
+        var targety=this.path[this.steps].y*this.height;
+        if(this.x < targetx){
+        this.x=(this.x+this.vx*duringTime>targetx)?targetx:(this.x+this.vx*duringTime);
+    }
+        if(this.y < targety){
+        this.y=(this.y+this.vy*duringTime>targety)?targety:(this.y+this.vy*duringTime);
+    }
+        if(this.x==targetx && this.y==targety){
+        this.steps+=1;
+    }
+    console.log(this.x,this.y,this.steps);
         }
     }
 }
@@ -86,4 +108,4 @@ var renderCore = new RenderCore();
 renderCore.start([world, boyShape]);
 
 var ticker = new Ticker();
-ticker.start([body]);
+ticker.start([body]);}
