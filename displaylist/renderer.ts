@@ -43,7 +43,7 @@ module render {
             else {
                 //TODO:
                 // GLOBAL_MATRIX = PARENT_GLOBAL_MATRIX * LOCAL_MATRIX
-                this.globalMatrix = localMatrix;
+                this.globalMatrix = matrixAppendMatrix  (localMatrix,parent.globalMatrix);
             }
 
 
@@ -62,7 +62,17 @@ module render {
 
         }
     }
-
+// 矩阵乘法
+function matrixAppendMatrix(m1:Matrix,m2:Matrix) :Matrix{
+    var result = new Matrix();
+    result.a = m1.a*m2.a +m1.b*m2.c;
+    result.b = m1.a*m2.b+m1.b*m2.d;
+    result.c = m1.c*m2.a+m1.d*m2.c;
+    result.d = m1.c*m2.b+m1.d*m2.d;
+    result.tx = m2.a*m1.tx+m2.c*m1.ty+m2.tx;
+    result.ty =m2.b*m1.tx+m2.d*m1.ty+m2.ty;
+    return result;
+}
     export class DisplayObjectContainer extends DisplayObject {
 
 
