@@ -143,11 +143,3 @@ var right_legOnClick = () => {
 eventCore.register(head,headHitTest,headOnClick);
 eventCore.register(left_leg,left_legHitTest,left_legOnClick);
 eventCore.register(right_leg,right_legHitTest,right_legOnClick);
-
-
-
-
-
-
-
-
