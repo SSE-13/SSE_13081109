@@ -34,13 +34,7 @@ module game {
             context.beginPath();
             for (var i = 0; i < NUM_COLS; i++) {
                 for (var j = 0; j < NUM_ROWS; j++) {
-                   /* if(this.grid.getNode(i,j).walkable==true){
-                         context.fillStyle = '#0000FF';
-                      
-                    }else{
-                         context.fillStyle = '#000000';
-                    
-                    }*/
+             
                     context.rect(i * GRID_PIXEL_WIDTH, j * GRID_PIXEL_HEIGHT, GRID_PIXEL_WIDTH, GRID_PIXEL_HEIGHT);
                     context.fill();
                    context.stroke();
@@ -54,7 +48,7 @@ module game {
     export class BoyShape extends DisplayObject {
         render(context: CanvasRenderingContext2D) {
             context.beginPath()
-            context.fillStyle = '#00FFFF';
+            context.fillStyle = '#0000FF';
             context.arc(GRID_PIXEL_WIDTH / 2, GRID_PIXEL_HEIGHT / 2, Math.min(GRID_PIXEL_WIDTH, GRID_PIXEL_HEIGHT) / 2 - 5, 0, Math.PI * 2);
             context.fill();
             context.closePath();
@@ -80,8 +74,7 @@ module game {
          time=0;
          vx;
          vy;
-         
-        
+           
          public run(grid) {
             grid.setStartNode(0, 0);
             grid.setEndNode(10,10);
